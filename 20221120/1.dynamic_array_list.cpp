@@ -13,19 +13,65 @@ void initList(SeqList &list);
 
 void increaseSize(SeqList &list, int len);
 
+// 指定位序(起始为1)插入数据
+bool addList(SeqList &list, int i, int e);
+
+// 删除指定位置的元素,并返回被删除的元素
+bool removeElementFromList(SeqList &list, int i, int &deletedValue);
+
 int mainTest() {
     SeqList list;
     initList(list);
-    list.data[0] = 1;
-    list.data[5] = 5;
-
-    int b = list.data[5];
-    std::cout << "sixth number is: " << b << std::endl;
-    if (list.length >= 2) {
-        increaseSize(list, InitSize);
+    bool addStatusFlag = addList(list, 1, 2);
+    if (addStatusFlag) {
+        printf("%s", "添加成功\n");
+    } else {
+        printf("%s", "添加失败.\n");
     }
-
+    for (int i = 0; i < list.length; ++i) {
+        printf("%d element is: %d", i + 1, list.data[i]);
+    }
+    // 删除后
+    int deletedNumber = -1;
+    bool deletedStatusFlag = removeElementFromList(list, 1, deletedNumber);
+    if (deletedStatusFlag) {
+        printf("删除成功%d\n",deletedNumber);
+    } else {
+        printf("%s", "添加失败.\n");
+    }
+    for (int i = 0; i < list.length; ++i) {
+        printf("%d element is: %d", i + 1, list.data[i]);
+    }
     return 0;
+}
+
+bool removeElementFromList(SeqList &list, int i, int &deletedValue) {
+    if (i < 1 || i > list.length) {
+        return false;
+    }
+    deletedValue = list.data[i-1];
+    for (int j = i; j < list.length; ++j) {
+        list.data[j-1]=list.data[j];
+    }
+    list.length--;
+    return true;
+}
+
+bool addList(SeqList &list, int i, int e) {
+    // 判断index合法性
+    if (i < 1 || i > list.length + 1) {
+        return false;
+    }
+    if (list.length >= list.maxSize) {
+        return false;
+    }
+    // 往后移动
+    for (int j = list.length; j >= i; j--) {
+        list.data[j] = list.data[j - 1];
+    }
+    list.data[i - 1] = e;
+    list.length++;
+    return true;
 }
 
 // 初始化列表
