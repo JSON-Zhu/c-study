@@ -10,7 +10,13 @@
 //void sum(seqList &list);
 
 int main() {
-    mainTest();
+    // 数组实现
+    // mainTest();
+    // 链表实现
+
+
+
+
 //    seqList list;
 //    list.length = 9;
 //    sum(list);

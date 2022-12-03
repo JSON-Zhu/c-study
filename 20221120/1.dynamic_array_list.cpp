@@ -1,6 +1,6 @@
 #include <iostream>
 #include <stdlib.h>
-
+using namespace std;
 #define InitSize 10 //默认的最大长度
 
 typedef struct {
