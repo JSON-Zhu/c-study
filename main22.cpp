@@ -1,6 +1,8 @@
 #include <iostream>
 #include <stdlib.h>
 #include "20221120/1.dynamic_array_list.cpp"
+#include "20221120/2.linked_list.cpp"
+
 #define MaxSize 10
 
 //typedef struct  {
@@ -13,8 +15,11 @@ int main() {
     // 数组实现
     // mainTest();
     // 链表实现
-
-
+    LinkedList list;
+    list_tailInsert(list);
+    traverseList(list);
+    LNode *pNode = getElementByValue(list, 2);
+    cout << pNode << endl;
 
 
 //    seqList list;
