@@ -57,6 +57,18 @@ void removeElement(LinkedList list, int index);
  * @return
  */
 bool removeSpecificElement(LNode *p);
+/**
+ * 遍历链表
+ * @param list
+ */
+void traverseList(LinkedList &list);
+
+int dLinkedListTest() {
+    LinkedList list = NULL;
+    list_tailInsert(list);
+    insertElement(list, 5, 5);
+    traverseList(list);
+}
 
 bool removeSpecificElement(LNode *p) {
     if (p == NULL) {
@@ -126,12 +138,6 @@ LNode *getElement(LinkedList list, int i) {
     }
     return p;
 }
-
-/**
- * 遍历链表
- * @param list
- */
-void traverseList(LinkedList &list);
 
 LinkedList list_tailInsert(LinkedList &list) {
     LNode *s;

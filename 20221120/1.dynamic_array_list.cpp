@@ -1,5 +1,8 @@
+
 #include <iostream>
 #include <stdlib.h>
+#include "../chapter2/2.2.3exercise.cpp"
+
 using namespace std;
 #define InitSize 10 //默认的最大长度
 
@@ -35,7 +38,7 @@ int mainTest() {
     int deletedNumber = -1;
     bool deletedStatusFlag = removeElementFromList(list, 1, deletedNumber);
     if (deletedStatusFlag) {
-        printf("删除成功%d\n",deletedNumber);
+        printf("删除成功%d\n", deletedNumber);
     } else {
         printf("%s", "添加失败.\n");
     }
@@ -49,9 +52,9 @@ bool removeElementFromList(SeqList &list, int i, int &deletedValue) {
     if (i < 1 || i > list.length) {
         return false;
     }
-    deletedValue = list.data[i-1];
+    deletedValue = list.data[i - 1];
     for (int j = i; j < list.length; ++j) {
-        list.data[j-1]=list.data[j];
+        list.data[j - 1] = list.data[j];
     }
     list.length--;
     return true;
