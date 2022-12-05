@@ -88,6 +88,88 @@ bool move_p_index(int arr[], int p, int len);
  */
 bool calcMiddleNumber(int arr[], int arr1[]);
 
+/**
+ * 综合应用题 12. 找到主元素
+ *
+ * @param arr
+ * @return
+ */
+bool findMainElement(int arr[], int n);
+
+/**
+ * 综合应用题 13. 找到最小正整数
+ * @param arr
+ * @param n
+ * @return
+ */
+bool findSmallestPositiveInteger(int arr[], int n);
+
+bool findSmallestPositiveInteger(int arr[], int n) {
+    // 辅助数组
+    int *arrB = (int *) malloc(sizeof(int) * n);
+    for (int i = 0; i < n; ++i) {
+        arr[i] > 0 ? arrB[arr[i] - 1] = 1 : 0;
+    }
+    for (int i = 0; i < n; ++i) {
+        if (arrB[i] == 0)
+            return i+1;
+    }
+    return n+1;
+}
+
+int findMainElementV2(int arr[], int n);
+
+/**
+ * 课本的做法非常巧妙, 如果存在主元素,
+ * 必然对应的元素count>0,然后继续找实际出现多少次,进行验证
+ * @param arr
+ * @param n
+ * @return
+ */
+int findMainElementV2(int arr[], int n) {
+    int candidate = arr[0], count = 1, occurCount;
+    for (int i = 1; i < n; ++i) {
+        if (arr[i] == candidate) {
+            count++;
+        } else if (count > 0) {
+            count--;
+        } else {
+            candidate = arr[i];
+            count = 1;
+        }
+    }
+    if (count > 0) {
+        count = 0;
+        for (int i = 0; i < n; ++i) {
+            if (arr[i] == candidate) {
+                count++;
+            }
+        }
+    }
+    return count > n / 2 ? candidate : -1;
+}
+
+// 暴力双重for循环,时间复杂度n^2,空间复杂度n
+bool findMainElement(int arr[], int n) {
+    int count = 0;
+    int len = n;
+    for (int i = 0; i < len; ++i) {
+        count = 0;
+        int temp = arr[i];
+        for (int j = 0; j < len; ++j) {
+            if (temp == arr[j])
+                count++;
+        }
+        if (count > len / 2) {
+            cout << "main element is :" << temp << endl;
+            break;
+        }
+    }
+    if (count <= len / 2) {
+        cout << "-1" << endl;
+    }
+}
+
 bool calcMiddleNumber(int arr[], int arr1[]) {
     // 暂时使用合并有序数组的方式
 }
@@ -249,10 +331,15 @@ int listTest() {
     // 删除所有重复元素
     // deleteDuplicateValueFromList(list);
     // 合并两个有序顺序表
-    mergeTwoOrderedList(list, list2, resultList);
+    // mergeTwoOrderedList(list, list2, resultList);
 
-    traverseList(resultList);
+    // traverseList(resultList);
     // int arr[10] = {1, 2, 3, 12, 14, 15, 16, 17};
+    int arr[] = {0, 5, 5, 3, 5, 7, 5, 70};
+    // int i = findMainElementV2(arr, 8);
+    int i = findSmallestPositiveInteger(arr,8);
+    // cout << "main element is : " << i << endl;
+    cout << "Smallest Positive Integer is : " << i << endl;
     // int arr[] = {1, 2, 3, 12, 14, 15, 16, 17};
     // changeOrderOfArray(arr, 3, 5);
     // 二分查找并插入相关数据
