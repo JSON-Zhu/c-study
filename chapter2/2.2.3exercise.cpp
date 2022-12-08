@@ -1,7 +1,10 @@
 #pragma once
 
+#define MAXINT 0x7fffffff
+
 #include <iostream>
 #include <stdlib.h>
+#include <math.h>
 #include "../20221120/1.dynamic_array_list.cpp"
 
 using namespace std;
@@ -104,6 +107,94 @@ bool findMainElement(int arr[], int n);
  */
 bool findSmallestPositiveInteger(int arr[], int n);
 
+/**
+ * 综合应用题 14. 最小三元组距离
+ * @param arr
+ * @param arr2
+ * @param arr3
+ * @return
+ */
+bool smallestDistance(int arr[], int arr2[], int arr3[]);
+
+/**
+ * 参考书给的这种算法,很巧妙,用到了数学的知识, 很好,2022年12月8日21:35:51
+ * @param arr
+ * @param arr2
+ * @param arr3
+ * @param n1
+ * @param n2
+ * @param n3
+ * @return
+ */
+bool smallestDistanceV2(int arr[], int arr2[], int arr3[], int n1, int n2, int n3);
+
+int smallestOfThree(int i, int i1, int i2);
+
+bool smallestDistanceV2(int arr[], int arr2[], int arr3[], int n1, int n2, int n3) {
+    int i = 0, j = 0, k = 0;
+//    int base = abs(arr[0] - arr2[0]) + abs(arr2[0] - arr3[0]) + abs(arr3[0] - arr[0]);
+    int base = MAXINT;
+    while (i < n1 && j < n2 && k < n3) {
+        int result = abs(arr[i] - arr2[j])
+                     + abs(arr2[j] - arr3[k])
+                     + abs(arr3[k] - arr[i]);
+        if (base > result) {
+            base = result;
+        }
+        int three = smallestOfThree(arr[i], arr2[j], arr3[k]);
+        if (arr[i] == three) {
+            i++;
+        } else if (arr2[j] == three) {
+            j++;
+        } else {
+            k++;
+        }
+    }
+    printf("smallest distance is : %d", base);
+}
+
+int smallestOfThree(int i, int i1, int i2) {
+    if (i < i1 && i < i2) {
+        return i;
+    }
+    if (i1 < i && i1 < i2) {
+        return i1;
+    }
+    return i2;
+}
+
+/**
+ * 暴力三重for循环-_- 2022年12月7日20:29:00,还要优化.
+ * @param arr
+ * @param arr2
+ * @param arr3
+ * @param n1
+ * @param n2
+ * @param n3
+ * @return
+ */
+bool smallestDistance(int arr[], int arr2[], int arr3[], int n1, int n2, int n3) {
+    int index1 = 0, index2 = 0, index3 = 0;
+    int base = abs(arr[0] - arr2[0]) + abs(arr2[0] - arr3[0]) + abs(arr3[0] - arr[0]);
+    for (int i = 0; i < n1; ++i) {
+        for (int j = 0; j < n2; ++j) {
+            for (int k = 0; k < n3; ++k) {
+                int result = abs(arr[i] - arr2[j])
+                             + abs(arr2[j] - arr3[k])
+                             + abs(arr3[k] - arr[i]);
+                if (result < base) {
+                    swap(index1, i);
+                    swap(index2, j);
+                    swap(index3, k);
+                    swap(result, base);
+                }
+            }
+        }
+    }
+    printf("index is %d,%d,%d, smallest distance is: %d\n", arr[index1], arr2[index2], arr3[index3], base);
+    return true;
+}
+
 bool findSmallestPositiveInteger(int arr[], int n) {
     // 辅助数组
     int *arrB = (int *) malloc(sizeof(int) * n);
@@ -112,9 +203,9 @@ bool findSmallestPositiveInteger(int arr[], int n) {
     }
     for (int i = 0; i < n; ++i) {
         if (arrB[i] == 0)
-            return i+1;
+            return i + 1;
     }
-    return n+1;
+    return n + 1;
 }
 
 int findMainElementV2(int arr[], int n);
@@ -337,9 +428,14 @@ int listTest() {
     // int arr[10] = {1, 2, 3, 12, 14, 15, 16, 17};
     int arr[] = {0, 5, 5, 3, 5, 7, 5, 70};
     // int i = findMainElementV2(arr, 8);
-    int i = findSmallestPositiveInteger(arr,8);
+    int i = findSmallestPositiveInteger(arr, 8);
     // cout << "main element is : " << i << endl;
-    cout << "Smallest Positive Integer is : " << i << endl;
+    // cout << "Smallest Positive Integer is : " << i << endl;
+    int arr1[] = {-1, 0, 9};
+    int arr2[] = {-25, -10, 10, 11};
+    int arr3[] = {2, 9, 17, 30, 41};
+    // smallestDistance(arr1, arr2, arr3, 3, 4, 5);
+    smallestDistanceV2(arr1, arr2, arr3, 3, 4, 5);
     // int arr[] = {1, 2, 3, 12, 14, 15, 16, 17};
     // changeOrderOfArray(arr, 3, 5);
     // 二分查找并插入相关数据
