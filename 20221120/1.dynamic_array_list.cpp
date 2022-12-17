@@ -1,4 +1,10 @@
 
+// hello.h
+#ifndef HELLO_H_
+#define HELLO_H_
+
+#endif  // HELLO_H_
+
 #include <iostream>
 #include <stdlib.h>
 #include "../chapter2/2.2.3exercise.cpp"

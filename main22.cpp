@@ -1,7 +1,8 @@
 #include <iostream>
 #include <stdlib.h>
 #include "chapter2/2.2.3exercise.cpp"
-#include "20221120/2.linked_list.cpp"
+#include "chapter2/2.3.7exercise.cpp"
+
 
 #define MaxSize 10
 
@@ -14,9 +15,10 @@
 int main() {
     // 数组实现
     // mainTest();
-    listTest();
+    // listTest();
     // 链表实现
 
+    test2();
 
     return 0;
 }

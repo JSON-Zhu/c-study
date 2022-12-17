@@ -132,8 +132,8 @@ int smallestOfThree(int i, int i1, int i2);
 
 bool smallestDistanceV2(int arr[], int arr2[], int arr3[], int n1, int n2, int n3) {
     int i = 0, j = 0, k = 0;
-//    int base = abs(arr[0] - arr2[0]) + abs(arr2[0] - arr3[0]) + abs(arr3[0] - arr[0]);
-    int base = MAXINT;
+  int base = abs(arr[0] - arr2[0]) + abs(arr2[0] - arr3[0]) + abs(arr3[0] - arr[0]);
+ //   int base = MAXINT;
     while (i < n1 && j < n2 && k < n3) {
         int result = abs(arr[i] - arr2[j])
                      + abs(arr2[j] - arr3[k])
