@@ -49,6 +49,76 @@ void removeSmallest(LinkedList &list);
 void sortingList(LinkedList &list);
 
 /**
+ * 综合应用题 07 删除指定区间的值
+ * @param list
+ */
+void removeSpecifiedInterval(LinkedList &list, int begin, int end);
+
+/**
+ * 综合应用题 08 找出两个单链表的公共结点
+ * 有相同的结点表明后续结点必然全部都是相同的,因为单链表的结点只能存储一个next指针
+ * @param list1
+ * @param list2
+ */
+LNode * findCommonElement(LinkedList &list1, LinkedList &list2);
+
+LNode * findCommonElement(LinkedList &list1, LinkedList &list2) {
+    LinkedList longList, shortList;
+    int length1 = getListLength(list1);
+    int length2 = getListLength(list2);
+    // 长链表需要先遍历的元素个数
+    int dist = 0;
+    if (length1 > length2) {
+        longList = list1->next;
+        shortList = list2->next;
+        // 相减后并且长链表在遍历dist个元素,然后通知遍历长短链表,如果还有相同的元素,则必然他们在长短链表中的index是一致的.
+        dist = length1 - length2;
+    } else {
+        longList = list2->next;
+        shortList = list1->next;
+        dist = length2 - length1;
+    }
+    // 长链表遍历dist个,是两个链表长度一致,以一起遍历
+    while (dist > 0) {
+        longList = longList->next;
+        dist--;
+    }
+    // 开始同时遍历长短两个链表
+    while (longList != nullptr) {
+        // 找到即返回
+        if (shortList == longList) {
+            return longList;
+        } else {
+            shortList = shortList->next;
+            longList = longList->next;
+        }
+    }
+    // 没有找到相同的
+    return nullptr;
+}
+
+void removeSpecifiedInterval(LinkedList &list, int begin, int end) {
+    LNode *p = list->next, *pre, *next;
+    pre = list;
+    while (p != nullptr) {
+        // 先保存下个节点 ,确保不断链
+        next = p->next;
+        if (p->data >= begin && p->data <= end) {
+            // 临时节点,用于释放内存
+            LNode *temp;
+            temp = p;
+            // 移动p,pre指针
+            p = next;
+            pre->next = p;
+            free(temp);
+        } else {
+            pre = p;
+            p = next;
+        }
+    }
+}
+
+/**
  * 这方法太妙了, 我很难想到 2022年12月17日23:40:43
  * 我可能真是个正常人啊 笑哭ing........
  * @param list
@@ -69,8 +139,10 @@ void sortingList(LinkedList &list) {
         while (pre->next != nullptr && pre->next->data < p->data) {
             pre = pre->next;
         }
+        // 找到位置,在pre,pre->next之间插入p,
         p->next = pre->next;
         pre->next = p;
+        // 移动指针,继续扫描原链表
         p = r;
     }
 }
@@ -194,6 +266,21 @@ void test2() {
     //LNode *pNode = printListReverseV2(list->next);
     // list->next = pNode;
     // removeSmallest(list);
-    sortingList(list);
-    traverseList(list);
+    // sortingList(list);
+    // removeSpecifiedInterval(list, 1, 4);
+
+    LinkedList list1;
+    initList(list1);
+    LNode *pLNode2 = getElement(list, 2);
+    insertNode(list1,pLNode2);
+    
+    LinkedList list2;
+    initList(list2);
+    LNode *pLNode3 = getElement(list, 2);
+    insertNode(list2,pLNode3);
+
+    LNode *pLNode = findCommonElement(list1, list2);
+    traverseListNoHead(pLNode);
+
+    //traverseList(list);
 }

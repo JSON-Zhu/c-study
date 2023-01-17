@@ -57,11 +57,58 @@ void removeElement(LinkedList list, int index);
  * @return
  */
 bool removeSpecificElement(LNode *p);
+
 /**
  * 遍历链表
  * @param list
  */
 void traverseList(LinkedList &list);
+
+/**
+ * 遍历链表 .无表头
+ * @param list
+ */
+void traverseListNoHead(LinkedList &list);
+
+/**
+ * 获取链表的长度
+ * @param list
+ * @return
+ */
+int getListLength(LinkedList &list);
+
+/**
+ * 链表尾插指定结点
+ * @param list 
+ * @param lNode 
+ */
+void insertNode(LinkedList &list, LNode *lNode);
+
+void insertNode(LinkedList &list, LNode *lNode) {
+    LNode *p = list->next;
+    LNode *pre = list;
+    for (;;) {
+        if (p == nullptr) {
+            pre->next = lNode;
+            break;
+        }
+        pre = p;
+        p = p->next;
+    }
+}
+
+int getListLength(LinkedList &list) {
+    if (list == nullptr || list->next == nullptr) {
+        return 0;
+    }
+    LNode *p = list->next;
+    int len = 0;
+    while (p != nullptr) {
+        p = p->next;
+        len++;
+    }
+    return len;
+}
 
 int dLinkedListTest() {
     LinkedList list = NULL;
@@ -172,6 +219,15 @@ void traverseList(LinkedList &list) {
     }
 }
 
+void traverseListNoHead(LinkedList &list) {
+    if (list == NULL)
+        return;
+    LNode *p = list;
+    while (p != NULL) {
+        cout << "data is: " << p->data << endl;
+        p = p->next;
+    }
+}
 
 LinkedList list_headInsert(LinkedList &list) {
     LNode *s;
