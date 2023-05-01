@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include "chapter2/2.2.3exercise.cpp"
 #include "chapter2/2.3.7exercise.cpp"
+#include "chapter3/3.1stack.cpp"
 
 
 #define MaxSize 10
@@ -18,7 +19,10 @@ int main() {
     // listTest();
     // 链表实现
 
-    test2();
+    //test2();
+    // 栈测试
+
+    test3();
 
     return 0;
 }
