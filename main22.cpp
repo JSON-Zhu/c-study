@@ -3,7 +3,7 @@
 #include "chapter2/2.2.3exercise.cpp"
 #include "chapter2/2.3.7exercise.cpp"
 #include "chapter3/3.1stack.cpp"
-
+#include "chapter3/CheckBracket.cpp"
 
 #define MaxSize 10
 
@@ -22,7 +22,7 @@ int main() {
     //test2();
     // 栈测试
 
-    test3();
-
+    //test3();
+    test33();
     return 0;
 }
